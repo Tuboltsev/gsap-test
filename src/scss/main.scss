@@ -1,0 +1,18 @@
+@import 'abstracts/mixins';
+@import 'abstracts/helpers';
+@import 'abstracts/functions';
+
+@import 'variables';
+@import 'common';
+
+// components
+@import 'components/slider';
+
+// layout
+@import 'layout/header';
+@import 'layout/main';
+@import 'layout/pages';
+@import 'layout/footer';
+
+// pages
+@import 'pages/index.scss';
