@@ -57,7 +57,6 @@ $(document).ready(function() {
 			scope.options.damping = 0;
 		} else {
 			scope.options.damping = 0.1;
-			scope.scrollTo(0, 710, 0);
 		}
 	}
 });
