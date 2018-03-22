@@ -13,7 +13,7 @@ const config = {
 	},
 	libs: [
 		'jquery.min.js',
-		'jquery.disablescroll.min.js',
+		'smooth-scrollbar.js',
 		'TweenMax.min.js',
 		'TimelineMax.min.js'
 	],

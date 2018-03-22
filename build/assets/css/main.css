@@ -66,6 +66,13 @@ body {
   .slider-skip:hover {
     background-color: #28B0EC; }
 
+#wrapper {
+  position: fixed;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  left: 0; }
+
 .div {
   height: 740px;
   background-color: rgba(0, 0, 0, 0.3); }

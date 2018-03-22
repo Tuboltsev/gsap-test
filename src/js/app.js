@@ -2,45 +2,64 @@ $(document).ready(function() {
 
 	var sliderSection = $('.slider-section'),
 		oldScrolled = 0,
+
+		scrollbar = Scrollbar.init(document.getElementById('wrapper'), {
+			continuousScrolling: false,
+			// alwaysShowTracks: true,
+		}),
+
 		tl = new TimelineMax({
 			onComplete: function() { 
-				$(window).disablescroll('undo');
+				disableScroll(false);
 			}
-		})
-		.set(
+		}).set(
 			[$('.slide1'), $('.slider-description').first().addClass('current')], 
 			{autoAlpha: 1}
 		);
 
-	window.onscroll = function() {
-		var scrolled = $(document).scrollTop(),
+
+	scrollbar.addListener(function() {
+		
+		var scrolled = this.scrollTop,
 			coords = sliderSection.position();
 
-		if (coords.top > scrolled && coords.top - scrolled < 50 && oldScrolled < scrolled) {
-			$("html, body").stop()
-				.animate({scrollTop:coords.top}, 150, 'swing', function() {
-					$(window).disablescroll();
-					animateIn(tl);
-			});
+		if (coords.top > scrolled && coords.top - scrolled < 10 && oldScrolled < scrolled) {
+			disableScroll(true, this);
+			scrollbar.scrollTo(coords.left, coords.top);
+			scrollbar.setPosition(coords.left, coords.top);
+			animateIn(tl);
 		}
 
-		if (coords.top < scrolled && scrolled - coords.top < 50 && oldScrolled > scrolled) {
-			$("html, body").stop()
-				.animate({scrollTop:coords.top}, 150, 'swing', function() {
-					$(window).disablescroll();
-					animateOut(tl);
-			});
+		if (coords.top < scrolled && scrolled - coords.top < 20 && oldScrolled > scrolled) {
+			disableScroll(true, this);
+			scrollbar.scrollTo(coords.left, coords.top);
+			scrollbar.setPosition(coords.left, coords.top);
+			animateIn(tl);
 		}
 
 		oldScrolled = scrolled;
-	}
+	});
+	
 	
 	$('.slider-skip').on('click', function() {
-		$(window).disablescroll('undo');
-		var descSlideIdx = tl.seek().data.endSlide;
-		showSlideDescription(descSlideIdx);
+		disableScroll(false);
+		var descSlideIdx = tl.seek().data;
+		if (descSlideIdx && descSlideIdx.endSlide) {
+			showSlideDescription(descSlideIdx.endSlide);
+		}
 	});
 
+
+	function disableScroll(status, scope) {
+		scope = scope || scrollbar;
+
+		if (status) {
+			scope.options.damping = 0;
+		} else {
+			scope.options.damping = 0.1;
+			scope.scrollTo(0, 710, 0);
+		}
+	}
 });
 
 
